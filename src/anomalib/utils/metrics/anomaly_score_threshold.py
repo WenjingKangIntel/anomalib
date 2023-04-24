@@ -26,7 +26,6 @@ class AnomalyScoreThreshold(PrecisionRecallCurve):
 
     def __init__(self, default_value: float = 0.5, **kwargs) -> None:
         super().__init__(num_classes=1, **kwargs)
-
         self.add_state("value", default=torch.tensor(default_value), persistent=True)  # pylint: disable=not-callable
         self.value = torch.tensor(default_value)  # pylint: disable=not-callable
 
@@ -50,7 +49,6 @@ class AnomalyScoreThreshold(PrecisionRecallCurve):
                 "to poor predictions. For a more reliable adaptive threshold computation, please add some anomalous "
                 "images to the validation set."
             )
-
         precision, recall, thresholds = super().compute()
         f1_score = (2 * precision * recall) / (precision + recall + 1e-10)
         if thresholds.dim() == 0:
